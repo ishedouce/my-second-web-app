@@ -1,8 +1,38 @@
 var http = require('http');
-var port= process.env.PORT || 8080;
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/html'});
+fs = require('fs');
 
-  res.end('<h1> my name is la douce</h1> ');
-}).listen(port);
-console.log("I'm running on port "+port);
+
+function serveStaticFile(res, path, ContentType, responseCode){
+    if(!responseCode) responseCode = 200;
+    fs.readFile(__dirname + path, function(err,data){
+        if(err) {
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end('500 - Internal Error');
+        }else{
+            res.writeHead(responseCode,
+                {'Content-Type': ContentType});
+            res.end(data);
+        }
+    });
+}
+
+http.createServer(function(req, res){
+    var path = req.url.replace(/\/?(?:\?.*)?$/, '').toLowerCase();
+
+    switch(path) {
+        case '':
+            serveStaticFile(res, '/public/home.html', 'text/html');
+            break;
+        case '/about':
+            serveStaticFile(res, '/public/about.html', 'text/html');
+            break;
+        case '/img/logo.png':
+            serveStaticFile(res, '/public/img/logo.png', 'image/jpeg'
+            );
+            break;
+        default:
+            serveStaticFile(res, '/public/404.html', 'text/html', 404);
+            break;
+    }
+}).listen(3000);
+console.log('server stated at 3000');
