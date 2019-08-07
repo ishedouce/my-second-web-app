@@ -1,0 +1,16 @@
+{
+  "name": "ladouce",
+  "version": "0.0.1",
+  "description": "my web app",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ishedouce/my-second-web-app.git"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
