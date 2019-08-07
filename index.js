@@ -1,5 +1,6 @@
 var http = require('http');
 fs = require('fs');
+var port= process.env.PORT || 8080;
 
 
 function serveStaticFile(res, path, ContentType, responseCode){
@@ -34,5 +35,5 @@ http.createServer(function(req, res){
             serveStaticFile(res, '/public/404.html', 'text/html', 404);
             break;
     }
-}).listen(3000);
+}).listen(port);
 console.log('server stated at 3000');
